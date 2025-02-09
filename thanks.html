@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Letter Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: pink;
+            overflow: hidden;
+        }
+
+        .envelope {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            background-color: #ff6666;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 80px solid #ff4d4d;
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .card {
+            position: absolute;
+            width: 180px;
+            height: 120px;
+            background-color: white;
+            border-radius: 10px;
+            text-align: center;
+            padding: 10px;
+            transform: translateY(50px);
+            transition: transform 1s ease-in-out;
+        }
+
+        .message {
+            font-size: 14px;
+            color: #ff4d4d;
+            display: none;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            font-size: 24px;
+            color: red;
+            animation: fly 3s linear infinite;
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-300px) scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope" id="envelope">
+        <div class="flap" id="flap"></div>
+        <div class="card" id="card">
+            <h3>Thank You! ❤️</h3>
+            <p class="message">For Accepting My Love</p>
+        </div>
+    </div>
+
+    <script>
+        const envelope = document.getElementById("envelope");
+        const flap = document.getElementById("flap");
+        const card = document.getElementById("card");
+
+        envelope.addEventListener("click", () => {
+            flap.style.transform = "rotateX(180deg)";
+            card.style.transform = "translateY(-70px)";
+        });
+
+        card.addEventListener("click", () => {
+            document.querySelector(".message").style.display = "block";
+            generateHearts();
+        });
+
+        function generateHearts() {
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("hearts");
+                heart.innerHTML = "❤️";
+                document.body.appendChild(heart);
+
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.top = Math.random() * window.innerHeight + "px";
+
+                heart.style.animationDuration = Math.random() * 2 + 2 + "s";
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+        }
+    </script>
+
+</body>
+</html>
